@@ -1,0 +1,22 @@
+css
+
+body {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    max-width: 400px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+input {
+    width: 80px;
+    margin: 0 10px;
+    font-size: 1.2cm;
+    text-align: center;
+}
+
+button {
+    font-size: 1.1cm;
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+}
