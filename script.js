@@ -1,5 +1,7 @@
 const form = document.getElementById("timer-form");
-const durationInput = document.getElementById("duration");
+const durationHours = document.getElementById("duration-hours");
+const durationMinutes = document.getElementById("duration-minutes");
+const durationSeconds = document.getElementById("duration-seconds");
 const repeatsInput = document.getElementById("repeats");
 const output = document.getElementById("output");
 
@@ -62,14 +64,34 @@ form.addEventListener("submit", function (e) {
     clearInterval(timerInterval);
     clearTimeout(repeatTimeout);
 
-    const timeValue = durationInput.value;
+    const h = parseInt(durationHours.value) || 0;
+    const m = parseInt(durationMinutes.value) || 0;
+    const s = parseInt(durationSeconds.value) || 0;
     const repeatCount = parseInt(repeatsInput.value);
 
-    if (!timeValue || isNaN(repeatCount) || repeatCount < 1) {
+    if ((h === 0 && m === 0 && s === 0) || isNaN(repeatCount) || repeatCount < 1) {
         output.innerHTML = `<p>Please enter valid time and repeat count.</p>`;
         return;
     }
 
-    const durationInSeconds = timeStringToSeconds(timeValue);
+    const durationInSeconds = (h * 3600) + (m * 60) + s;
     startLoopTimer(durationInSeconds, repeatCount);
+
+    
 }); 
+
+const fillDropdown = (selectId, max, unit) => {
+  const sel = document.getElementById(selectId);
+  for (let i = 0; i <= max; i++) {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.text = `${i}${unit}`;
+    sel.appendChild(opt);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  fillDropdown('duration-hours', 23, 'h');
+  fillDropdown('duration-minutes', 59, 'm');
+  fillDropdown('duration-seconds', 59, 's');
+});
