@@ -8,8 +8,8 @@ let timerInterval;
 let repeatTimeout;
 
 function timeStringToSeconds(timestring) {
-    const [minutes, seconds] = timestring.split(":").map(Number);
-    return (minutes * 60) + seconds;
+    const [hours, minutes, seconds] = timestring.split(":").map(Number);
+    return (hours * 3600) + (minutes * 60) + (seconds || 0);
 }
 
 function startLoopTimer(duration, totalRepeats) {
