@@ -51,11 +51,11 @@ function formatTime(seconds) {
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
 
-    const hrsStr = hrs > 0 ? String(hrs).padStart(2, '0') + ":" : "";
+    const hrsStr = hrs > 0 ? String(hrs).padStart(2, '0') + ':' : '';
     const minStr = String(mins).padStart(2, '0');
     const secStr = String(secs).padStart(2, '0');
 
-    return `${hrsStr}${mins}:${secs}`;
+    return `${hrsStr}${minsStr}:${secsStr}`;
 }
 
 form.addEventListener("submit", function (e) {
@@ -95,3 +95,4 @@ document.addEventListener('DOMContentLoaded', () => {
   fillDropdown('duration-minutes', 59, 'm');
   fillDropdown('duration-seconds', 59, 's');
 });
+
