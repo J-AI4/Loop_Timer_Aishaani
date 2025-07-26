@@ -5,7 +5,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Loop Timer</title>
         <link rel="stylesheet" href="style.css">
-        
-        <script src="script.js" defer></script>
     </head>
+    <body>
+        <h1>Loop Timer</h1>
+
+        <div id=""timer-setup">
+        <label>
+            Set Time (MM:SS):
+            <input type="text" id="time-input" placeholder="e.g. 1:59"/>
+        </label>
+        <label>
+            Repeat Count:
+            <input type="number" id="repeat-count" min="1" value="1"/>
+        </label>
+        <button id="start-btn">Start Timer</button>
+        </div>
+
+        <div id="timer-display" style="display:none;">
+            <h2 id="countdown">00:00</h2>
+            <p>Loops left: <span id="loops-left"></span></p>
+            <button id="stop-btn">Stop</button>
+        </div>
+
+        <script src="script.js" defer></script>
+    </body>
 </html>
