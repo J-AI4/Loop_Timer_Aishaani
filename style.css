@@ -43,6 +43,24 @@ button {
     font-family: inherit;
 }
 
+select {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #a87e62;
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: #fff7f1;
+    color: #4d2005;
+    transition: border-color 0.3s ease;
+    flex: 1;
+}
+
+select:focus {
+    outline: none;
+    border-color: #7c5948;
+    background-color: #fceee0;
+}
+
 input:focus {
     outline: none;
     border-color: #7c5948;
