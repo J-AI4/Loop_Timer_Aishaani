@@ -76,3 +76,8 @@ function runTimer(duration) {
         timeLeft--;
     }, 1000);
 }
+
+function playSound() {
+    const beep = new Audio("audio.mp3");
+    beep.play();
+}
