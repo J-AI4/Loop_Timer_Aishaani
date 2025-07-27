@@ -1,3 +1,8 @@
+//personal notes for tomorrow: 
+//- explain each part to make future debugging easier
+//- final run-through and debugging
+//- ship
+
 const form = document.getElementById("timer-form");
 const output = document.getElementById("output");
 
