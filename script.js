@@ -94,4 +94,4 @@ document.addEventListener('DOMContentLoaded', () => {
   fillDropdown('duration-hours', 23, 'h');
   fillDropdown('duration-minutes', 59, 'm');
   fillDropdown('duration-seconds', 59, 's');
-}); 
+});
