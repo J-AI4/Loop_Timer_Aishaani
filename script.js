@@ -1,97 +1,78 @@
 const form = document.getElementById("timer-form");
-const durationHours = document.getElementById("duration-hours");
-const durationMinutes = document.getElementById("duration-minutes");
-const durationSeconds = document.getElementById("duration-seconds");
-const repeatsInput = document.getElementById("repeats");
 const output = document.getElementById("output");
 
+const hoursSelect = document.getElementById("duration-hours");
+const minutesSelect = document.getElementById("duration-minutes");
+const secondsSelect = document.getElementById("duration-seconds");
+
+for (let i = 0; i < 24; i++) {
+  hoursSelect.innerHTML += `<option value="${i}">${i.toString().padStart(2, '0')}h</option>`;
+}
+for (let i = 0; i < 60; i++) {
+  minutesSelect.innerHTML += `<option value="${i}">${i.toString().padStart(2, '0')}m</option>`;
+  secondsSelect.innerHTML += `<option value="${i}">${i.toString().padStart(2, '0')}s</option>`;
+}
+
+let interval;
+let totalRepeats = 0;
 let currentRepeat = 0;
-let timerInterval;
-let repeatTimeout;
-
-function timeStringToSeconds(timestring) {
-    const [hours, minutes, seconds] = timestring.split(":").map(Number);
-    return (hours * 3600) + (minutes * 60) + (seconds || 0);
-}
-
-function startLoopTimer(duration, totalRepeats) {
-    currentRepeat = 1;
-    runTimer(duration, totalRepeats);
-}
-
-function runTimer(duration, totalRepeats) {
-    let timeLeft = duration;
-
-    output.innerHTML = `<h2>Loop ${currentRepeat} of ${totalRepeats}</h2>
-                        <p>Time Left: ${formatTime(timeLeft)}</p>`;
-
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        output.innerHTML = `<h2>Loop ${currentRepeat} of ${totalRepeats}</h2>
-                            <p>Time Left: ${formatTime(timeLeft)}</p>`;
-
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            output.innerHTML = `<h2>Loop ${currentRepeat} Complete!</h2>`;
-
-            if (currentRepeat < totalRepeats) {
-                currentRepeat++; 
-                repeatTimeout = setTimeout(() => {
-                    runTimer(duration, totalRepeats);
-                }, 1000);
-            } else {
-                output.innerHTML = `<h2>All Loops Complete!</h2>`;
-            }
-        }
-    }, 1000);
-}
-
-function formatTime(seconds) {
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-
-    const hrsStr = hrs > 0 ? String(hrs).padStart(2, '0') + ':' : '';
-    const minStr = String(mins).padStart(2, '0');
-    const secStr = String(secs).padStart(2, '0');
-
-    return `${hrsStr}${minsStr}:${secsStr}`;
-}
 
 form.addEventListener("submit", function (e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    clearInterval(timerInterval);
-    clearTimeout(repeatTimeout);
+  clearInterval(interval);
+  output.innerHTML = "";
 
-    const h = parseInt(durationHours.value) || 0;
-    const m = parseInt(durationMinutes.value) || 0;
-    const s = parseInt(durationSeconds.value) || 0;
-    const repeatCount = parseInt(repeatsInput.value);
+  const hours = parseInt(hoursSelect.value);
+  const minutes = parseInt(minutesSelect.value);
+  const seconds = parseInt(secondsSelect.value);
+  totalRepeats = parseInt(document.getElementById("repeats").value);
+  currentRepeat = 1;
 
-    if ((h === 0 && m === 0 && s === 0) || isNaN(repeatCount) || repeatCount < 1) {
-        output.innerHTML = `<p>Please enter valid time and repeat count.</p>`;
-        return;
+  const totalTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
+
+  if (totalTime <= 0 || totalRepeats <= 0) {
+    output.textContent = "Please select a valid time and repeat count.";
+    return;
+  }
+
+  startLoop(totalTime);
+});
+
+function startLoop(duration) {
+  runTimer(duration);
+
+  interval = setInterval(() => {
+    currentRepeat++;
+    if (currentRepeat > totalRepeats) {
+      clearInterval(interval);
+      output.innerHTML = "<h2>All loops complete!</h2>";
+      playSound();
+    } else {
+      runTimer(duration);
+      playSound();
+    }
+  }, duration);
+}
+
+function runTimer(duration) {
+  let timeLeft = duration / 1000;
+
+  output.innerHTML = `<h2>Loop ${currentRepeat} of ${totalRepeats}</h2><p id="timer-display"></p>`;
+  const display = document.getElementById("timer-display");
+
+  const tick = setInterval(() => {
+    const hrs = Math.floor(timeLeft / 3600);
+    const mins = Math.floor((timeLeft % 3600) / 60);
+    const secs = Math.floor(timeLeft % 60);
+    const hrsStr = hrs > 0 ? hrs.toString().padStart(2, '0') + ':' : '';
+    display.textContent = `Time Left: ${hrsStr}${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+
+    if (timeLeft <= 0) {
+      clearInterval(tick);
     }
 
-    const durationInSeconds = (h * 3600) + (m * 60) + s;
-    startLoopTimer(durationInSeconds, repeatCount);
-
-    
-}); 
-
-const fillDropdown = (selectId, max, unit) => {
-  const sel = document.getElementById(selectId);
-  for (let i = 0; i <= max; i++) {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.text = `${i}${unit}`;
-    sel.appendChild(opt);
-  }
-};
-
-document.addEventListener('DOMContentLoaded', () => {
-  fillDropdown('duration-hours', 23, 'h');
-  fillDropdown('duration-minutes', 59, 'm');
-  fillDropdown('duration-seconds', 59, 's');
-});
+    timeLeft--;
+  }, 1000);
+}
