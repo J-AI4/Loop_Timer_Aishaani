@@ -18,6 +18,7 @@ How to Run:
 3. Try it out!
 
 What I Learned and Struggled With:
+
 I struggled most with calculating and displaying time correctly especially when converting between hours, minutes, and seconds. At one point during this project, my JavaScript stopped working, and I had a very hard time figuring out what went wrong. Through this project, I learned a lot about working with JavaScript, using event listeners properly, and debugging layout issues with HTML/CSS. I also got more comfortable figuring out bugs on my own.
 
 Notes:
