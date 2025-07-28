@@ -24,3 +24,6 @@ I struggled most with calculating and displaying time correctly especially when 
 Notes:
 
 This was built completely by me, although I did get some help with debugging through VSCode. Let me know if you have suggestions for new updates, I'm all ears!
+
+[![Athena Award Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Faward.athena.hackclub.com%2Fapi%2Fbadge)](https://award.athena.hackclub.com?utm_source=readme)
+
