@@ -1,7 +1,6 @@
-//personal notes for tomorrow: 
-//- explain each part to make future debugging easier
-//- final run-through and debugging
-//- ship
+//script.js for Loop Timer
+
+//getting elements from index.html file
 
 const form = document.getElementById("timer-form");
 const output = document.getElementById("output");
@@ -9,6 +8,8 @@ const output = document.getElementById("output");
 const hoursSelect = document.getElementById("duration-hours");
 const minutesSelect = document.getElementById("duration-minutes");
 const secondsSelect = document.getElementById("duration-seconds");
+
+//this is where I created the dropdowns for hours, minutes, and seconds
 
 for (let i = 0; i < 24; i++) {
     hoursSelect.innerHTML += `<option value="${i}">${i.toString().padStart(2, '0')}h</option>`;
@@ -21,6 +22,8 @@ for (let i = 0; i < 60; i++) {
 let interval;
 let totalRepeats = 0;
 let currentRepeat = 0;
+
+//this is the submit button, stops any running timers and sends error message if space is left blank
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -37,12 +40,14 @@ form.addEventListener("submit", function (e) {
     const totalTime = (hours * 3600 + minutes * 60 + seconds) * 1000;
 
     if (totalTime <= 0 || totalRepeats <= 0) {
-        output.textContent = "Please select a valid time and repeat count.";
+        output.textContent = "Oops! Please select a valid time and repeat count.";
         return;
     }
 
     startLoop(totalTime);
 });
+
+//starts the loop, until it reaches total repeat count
 
 function startLoop(duration) {
     runTimer(duration);
@@ -59,6 +64,8 @@ function startLoop(duration) {
         }
     }, duration);
 }
+
+//this is the "Time Left:" part, updates screen every second to show how much time is left
 
 function runTimer(duration) {
     let timeLeft = duration / 1000;
@@ -81,6 +88,8 @@ function runTimer(duration) {
         timeLeft--;
     }, 1000);
 }
+
+//play a little tune at the end of each loop
 
 function playSound() {
     const beep = new Audio("audio.mp3");
